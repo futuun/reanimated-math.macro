@@ -10,3 +10,6 @@ plugins:
 rules:
   prettier/prettier:
     - error
+
+globals:
+  __filename: true

@@ -15,11 +15,9 @@ function project(initialVelocity, decelerationRate) {
 ```
 vs
 ```js
-import calculate from 'reanimated.macro'
+import re from 'reanimated.macro'
 
 function project(initialVelocity, decelerationRate) {
-  return calculate`
-    ${initialVelocity} / 1000 * ${decelerationRate} / (1 - ${decelerationRate})
-  `
+  return re(initialVelocity / 1000 * decelerationRate / (1 - decelerationRate))
 }
 ```

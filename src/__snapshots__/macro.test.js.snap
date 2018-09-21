@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`macros call from function: call from function 1`] = `
+"
+import calculate from './macro'
+
+function project(initialVelocity, decelerationRate) {
+  return calculate(initialVelocity / 1000 * decelerationRate / (1 - decelerationRate))
+}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import _reanimated from \\"react-native-reanimated\\";
+
+function project(initialVelocity, decelerationRate) {
+  return _reanimated.divide(_reanimated.multiply(_reanimated.divide(initialVelocity, 1000), decelerationRate), _reanimated.sub(1, decelerationRate));
+}
+"
+`;
+
+exports[`macros normal call: normal call 1`] = `
+"
+import reanimate from './macro'
+
+const x = reanimate(3 - 2 * 2 + 2)
+const y = reanimate(1 + sin(3) - 2)
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import _reanimated from \\"react-native-reanimated\\";
+
+const x = _reanimated.add(_reanimated.sub(3, _reanimated.multiply(2, 2)), 2);
+
+const y = _reanimated.sub(_reanimated.add(1, _reanimated.sin(3)), 2);
+"
+`;
+
+exports[`macros possible import collision: possible import collision 1`] = `
+"
+import { State, Value } from 'react-native-reanimated'
+import re from './macro'
+
+const x = new Value(11)
+const sample = state => state === State.Active ? re(1 + 2) : re(x * 2)
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import _reanimated from \\"react-native-reanimated\\";
+import { State, Value } from 'react-native-reanimated';
+const x = new Value(11);
+
+const sample = state => state === State.Active ? _reanimated.add(1, 2) : _reanimated.multiply(x, 2);
+"
+`;

@@ -28,10 +28,20 @@
     "babel-plugin-macros": "^2.4.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.1",
+    "@babel/preset-env": "^7.0.0",
+    "babel-core": "^7.0.0-0",
     "babel-eslint": "^9.0.0",
+    "babel-jest": "^23.6.0",
+    "babel-plugin-tester": "^5.5.1",
     "eslint": "^5.5.0",
     "eslint-config-prettier": "^3.0.1",
     "eslint-plugin-prettier": "^2.6.2",
+    "jest": "^23.6.0",
     "prettier": "^1.14.2"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }

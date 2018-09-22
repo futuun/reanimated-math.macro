@@ -52,3 +52,25 @@ const x = new Value(11);
 const sample = state => state === State.Active ? _reanimated.add(1, 2) : _reanimated.multiply(x, 2);
 "
 `;
+
+exports[`macros unary minus operator: unary minus operator 1`] = `
+"
+import reanimate from './macro'
+
+const a = 666
+const x = reanimate(-2)
+const y = reanimate(-a)
+const z = reanimate(10 * -a + 2)
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import _reanimated from \\"react-native-reanimated\\";
+const a = 666;
+
+const x = _reanimated.multiply(2, -1);
+
+const y = _reanimated.multiply(a, -1);
+
+const z = _reanimated.add(_reanimated.multiply(10, _reanimated.multiply(a, -1)), 2);
+"
+`;

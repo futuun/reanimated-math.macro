@@ -60,6 +60,19 @@ function genericReplace(argumentPath, state, babel, libraryIdentifier) {
         path.replaceWith(ast)
       }
     },
+    UnaryExpression(path) {
+      if (path.node.operator === '-') {
+        // for unary minus operator: -var
+        const ast = babel.template('LIBRARY.METHOD(ARGUMENT, ARGUMENT2)')({
+          LIBRARY: libraryIdentifier,
+          METHOD: babel.types.identifier('multiply'),
+          ARGUMENT: path.node.argument,
+          ARGUMENT2: '-1',
+        })
+
+        path.replaceWith(ast)
+      }
+    },
   }
 
   argumentPath.parentPath.traverse(visitor)

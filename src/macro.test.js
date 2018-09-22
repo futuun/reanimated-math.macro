@@ -35,5 +35,16 @@ pluginTester({
         const sample = state => state === State.Active ? re(1 + 2) : re(x * 2)
       `,
     },
+    {
+      title: 'unary minus operator',
+      code: `
+        import reanimate from './macro'
+
+        const a = 666
+        const x = reanimate(-2)
+        const y = reanimate(-a)
+        const z = reanimate(10 * -a + 2)
+      `,
+    },
   ],
 })

@@ -1,4 +1,4 @@
-# reanimated.macro
+# reanimated-math.macro
 
 [react-native-reanimated](https://github.com/kmagiera/react-native-reanimated) is amazing library for handling animations in react native.
 
@@ -19,7 +19,7 @@ This [babel.macro](https://github.com/kentcdodds/babel-plugin-macros) aims to si
 ## Installation
 
 ```sh
-yarn add reanimated.macro -D
+yarn add reanimated-math.macro -D
 ```
 
 If you are using older version of react-native than 0.56 you have to 
@@ -27,7 +27,7 @@ install and configure [babel-plugin-macros](https://github.com/kentcdodds/babel-
 
 ## Usage
 ```js
-import re from 'reanimated.macro'
+import re from 'reanimated-math.macro'
 
 function project(initialVelocity, decelerationRate) {
   return re(initialVelocity / 1000 * decelerationRate / (1 - decelerationRate))
@@ -36,7 +36,7 @@ function project(initialVelocity, decelerationRate) {
 or 
 
 ```js
-import re from 'reanimated.macro'
+import re from 'reanimated-math.macro'
 
 function project(initialVelocity, decelerationRate) {
   return re`${initialVelocity} / 1000 * ${decelerationRate} / (1 - ${decelerationRate})`

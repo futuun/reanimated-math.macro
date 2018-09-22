@@ -1,5 +1,5 @@
 {
-  "name": "reanimated.macro",
+  "name": "reanimated-math.macro",
   "version": "0.0.1",
   "description": "Macro for arithmetic over Animated.Values from reanimated",
   "main": "lib/macro.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/futuun/reanimated.macro.git"
+    "url": "git+https://github.com/futuun/reanimated-math.macro.git"
   },
   "keywords": [
     "babel-plugin-macros",
@@ -23,9 +23,9 @@
   "author": "Michał Mokijewski <hello@naf.gl>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/futuun/reanimated.macro/issues"
+    "url": "https://github.com/futuun/reanimated-math.macro/issues"
   },
-  "homepage": "https://github.com/futuun/reanimated.macro#readme",
+  "homepage": "https://github.com/futuun/reanimated-math.macro#readme",
   "dependencies": {
     "babel-plugin-macros": "^2.4.0"
   },

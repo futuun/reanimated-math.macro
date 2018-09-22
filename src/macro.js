@@ -42,7 +42,7 @@ function reanimatedMacro({ references, state, babel }) {
       genericReplace(argumentPath, state, babel, libraryIdentifier)
     } else {
       throw new Error(
-        `reanimated.macro can only be used as tagged template expression or function call. You tried ${
+        `reanimated-math.macro can only be used as tagged template expression or function call. You tried ${
           referencePath.parentPath.type
         }.`,
       )

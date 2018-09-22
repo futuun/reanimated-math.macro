@@ -2,8 +2,10 @@
   "name": "reanimated.macro",
   "version": "0.0.1",
   "description": "Macro for arithmetic over Animated.Values from reanimated",
-  "main": "index.js",
+  "main": "lib/macro.js",
   "scripts": {
+    "build": "babel src --out-dir lib --ignore \"**/__snapshots__/**,**/*.test.js\"",
+    "prepublish": "npm run build",
     "test": "jest",
     "lint": "eslint ./src"
   },

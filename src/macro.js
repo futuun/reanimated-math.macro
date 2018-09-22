@@ -1,8 +1,8 @@
 import { createMacro } from 'babel-plugin-macros'
 
-export default createMacro(myMacro)
+export default createMacro(reanimatedMacro)
 
-function myMacro({ references, state, babel }) {
+function reanimatedMacro({ references, state, babel }) {
   const libraryIdentifier = state.file.path.scope.generateUidIdentifier('reanimated')
 
   references.default.forEach(referencePath => {

@@ -1,31 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`macros basic template string without variables: basic template string without variables 1`] = `
-"
-import re from './macro'
-
-const x = re\`1 + 2\`
-const y = re\`-2 + sin(12)\`
-const z = re\`1 * 22 / cos(sqrt(2))\`
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-import _reanimated from \\"react-native-reanimated\\";
-
-const x = _reanimated.add(1, 2);
-
-const y = _reanimated.add(_reanimated.multiply(2, -1), _reanimated.sin(12));
-
-const z = _reanimated.divide(_reanimated.multiply(1, 22), _reanimated.cos(_reanimated.sqrt(2)));
-"
-`;
-
 exports[`macros call from function: call from function 1`] = `
 "
 import calculate from './macro'
 
 function project(initialVelocity, decelerationRate) {
   return calculate(initialVelocity / 1000 * decelerationRate / (1 - decelerationRate))
+}
+
+function project2(initialVelocity, decelerationRate) {
+  return calculate\`\${initialVelocity} / 1000 * \${decelerationRate} / (1 - \${decelerationRate})\`
 }
 
       ↓ ↓ ↓ ↓ ↓ ↓
@@ -35,6 +19,10 @@ import _reanimated from \\"react-native-reanimated\\";
 function project(initialVelocity, decelerationRate) {
   return _reanimated.divide(_reanimated.multiply(_reanimated.divide(initialVelocity, 1000), decelerationRate), _reanimated.sub(1, decelerationRate));
 }
+
+function project2(initialVelocity, decelerationRate) {
+  return _reanimated.divide(_reanimated.multiply(_reanimated.divide(initialVelocity, 1000), decelerationRate), _reanimated.sub(1, decelerationRate));
+}
 "
 `;
 
@@ -42,16 +30,26 @@ exports[`macros normal call: normal call 1`] = `
 "
 import reanimate from './macro'
 
-const x = reanimate(3 - 2 * 2 + 2)
-const y = reanimate(1 + sin(3) - 2)
+const two = 2
+
+const x = reanimate(3 - 1 * two + two)
+const x2 = reanimate\`3 - 1 * \${two} + \${two}\`
+
+const y = reanimate(1 + sin(3) - two)
+const y2 = reanimate\`1 + sin(3) - \${two}\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
 import _reanimated from \\"react-native-reanimated\\";
+const two = 2;
 
-const x = _reanimated.add(_reanimated.sub(3, _reanimated.multiply(2, 2)), 2);
+const x = _reanimated.add(_reanimated.sub(3, _reanimated.multiply(1, two)), two);
 
-const y = _reanimated.sub(_reanimated.add(1, _reanimated.sin(3)), 2);
+const x2 = _reanimated.add(_reanimated.sub(3, _reanimated.multiply(1, two)), two);
+
+const y = _reanimated.sub(_reanimated.add(1, _reanimated.sin(3)), two);
+
+const y2 = _reanimated.sub(_reanimated.add(1, _reanimated.sin(3)), two);
 "
 `;
 
@@ -62,6 +60,7 @@ import re from './macro'
 
 const x = new Value(11)
 const sample = state => state === State.Active ? re(1 + 2) : re(x * 2)
+const sample2 = state => state === State.Active ? re\`1 + 2\` : re\`\${x} * 2\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
@@ -70,6 +69,8 @@ import { State, Value } from 'react-native-reanimated';
 const x = new Value(11);
 
 const sample = state => state === State.Active ? _reanimated.add(1, 2) : _reanimated.multiply(x, 2);
+
+const sample2 = state => state === State.Active ? _reanimated.add(1, 2) : _reanimated.multiply(x, 2);
 "
 `;
 
@@ -79,8 +80,13 @@ import reanimate from './macro'
 
 const a = 666
 const x = reanimate(-2)
+const x2 = reanimate\`-2\`
+
 const y = reanimate(-a)
+const y2 = reanimate\`-\${a}\`
+
 const z = reanimate(10 * -a + 2)
+const z2 = reanimate\`\${10} * -\${a} + 2\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
@@ -89,8 +95,14 @@ const a = 666;
 
 const x = _reanimated.multiply(2, -1);
 
+const x2 = _reanimated.multiply(2, -1);
+
 const y = _reanimated.multiply(a, -1);
 
+const y2 = _reanimated.multiply(a, -1);
+
 const z = _reanimated.add(_reanimated.multiply(10, _reanimated.multiply(a, -1)), 2);
+
+const z2 = _reanimated.add(_reanimated.multiply(10, _reanimated.multiply(a, -1)), 2);
 "
 `;

@@ -11,8 +11,13 @@ pluginTester({
       code: `
         import reanimate from './macro'
 
-        const x = reanimate(3 - 2 * 2 + 2)
-        const y = reanimate(1 + sin(3) - 2)
+        const two = 2
+
+        const x = reanimate(3 - 1 * two + two)
+        const x2 = reanimate\`3 - 1 * \${two} + \${two}\`
+
+        const y = reanimate(1 + sin(3) - two)
+        const y2 = reanimate\`1 + sin(3) - \${two}\`
       `,
     },
     {
@@ -22,6 +27,10 @@ pluginTester({
 
         function project(initialVelocity, decelerationRate) {
           return calculate(initialVelocity / 1000 * decelerationRate / (1 - decelerationRate))
+        }
+
+        function project2(initialVelocity, decelerationRate) {
+          return calculate\`\${initialVelocity} / 1000 * \${decelerationRate} / (1 - \${decelerationRate})\`
         }
       `,
     },
@@ -33,6 +42,7 @@ pluginTester({
 
         const x = new Value(11)
         const sample = state => state === State.Active ? re(1 + 2) : re(x * 2)
+        const sample2 = state => state === State.Active ? re\`1 + 2\` : re\`\${x} * 2\`
       `,
     },
     {
@@ -42,18 +52,13 @@ pluginTester({
 
         const a = 666
         const x = reanimate(-2)
-        const y = reanimate(-a)
-        const z = reanimate(10 * -a + 2)
-      `,
-    },
-    {
-      title: 'basic template string without variables',
-      code: `
-        import re from './macro'
+        const x2 = reanimate\`-2\`
 
-        const x = re\`1 + 2\`
-        const y = re\`-2 + sin(12)\`
-        const z = re\`1 * 22 / cos(sqrt(2))\`
+        const y = reanimate(-a)
+        const y2 = reanimate\`-\${a}\`
+
+        const z = reanimate(10 * -a + 2)
+        const z2 = reanimate\`\${10} * -\${a} + 2\`
       `,
     },
   ],

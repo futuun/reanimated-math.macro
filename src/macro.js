@@ -7,10 +7,33 @@ function myMacro({ references, state, babel }) {
 
   references.default.forEach(referencePath => {
     if (referencePath.parentPath.type === 'TaggedTemplateExpression') {
-      const quasiPath = referencePath.parentPath.get('quasi')
+      /**
+       * looks like always inside quasi we have n expressions and n+1 quasis
+       * we can create simple template from that by leaving EXPRESSION_X
+       * and filling them later one in template.
+       * This template is then wrapped in CallExpression so next if can take it
+       * and do proper transformations.
+       */
+      const { quasi } = referencePath.parent
+      const tagName = referencePath.container.tag.name
 
-      // that's hacky, we are just replacing re`stuff` with re(stuff) so it can be handled by next if statement
-      referencePath.parentPath.replaceWithSourceString(`re(${quasiPath.evaluate().value})`)
+      const templateCore = quasi.quasis.reduce((acc, curr, i) => {
+        if (quasi.quasis.length - 1 !== i) {
+          return acc.concat(curr.value.raw).concat(`EXPRESSION_${i}`)
+        }
+        return acc.concat(curr.value.raw)
+      }, '')
+      const templateConfig = quasi.expressions.reduce(
+        (acc, curr, i) => ({
+          ...acc,
+          [`EXPRESSION_${i}`]: curr,
+        }),
+        {},
+      )
+
+      const ast = babel.template(`${tagName}(${templateCore})`)(templateConfig)
+
+      referencePath.parentPath.replaceWith(ast)
     }
 
     if (referencePath.parentPath.type === 'CallExpression') {

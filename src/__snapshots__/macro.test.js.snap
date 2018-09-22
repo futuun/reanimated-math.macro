@@ -1,5 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`macros basic template string without variables: basic template string without variables 1`] = `
+"
+import re from './macro'
+
+const x = re\`1 + 2\`
+const y = re\`-2 + sin(12)\`
+const z = re\`1 * 22 / cos(sqrt(2))\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import _reanimated from \\"react-native-reanimated\\";
+
+const x = _reanimated.add(1, 2);
+
+const y = _reanimated.add(_reanimated.multiply(2, -1), _reanimated.sin(12));
+
+const z = _reanimated.divide(_reanimated.multiply(1, 22), _reanimated.cos(_reanimated.sqrt(2)));
+"
+`;
+
 exports[`macros call from function: call from function 1`] = `
 "
 import calculate from './macro'

@@ -7,9 +7,16 @@ function myMacro({ references, state, babel }) {
 
   references.default.forEach(referencePath => {
     if (referencePath.parentPath.type === 'TaggedTemplateExpression') {
-      asTag(referencePath.parentPath.get('quasi'), state, babel, libraryIdentifier)
-    } else if (referencePath.parentPath.type === 'CallExpression') {
-      asFunction(referencePath.parentPath.get('arguments'), state, babel, libraryIdentifier)
+      const quasiPath = referencePath.parentPath.get('quasi')
+
+      // that's hacky, we are just replacing re`stuff` with re(stuff) so it can be handled by next if statement
+      referencePath.parentPath.replaceWithSourceString(`re(${quasiPath.evaluate().value})`)
+    }
+
+    if (referencePath.parentPath.type === 'CallExpression') {
+      const [argumentPath] = referencePath.parentPath.get('arguments')
+
+      genericReplace(argumentPath, state, babel, libraryIdentifier)
     } else {
       throw new Error(
         `reanimated.macro can only be used as tagged template expression or function call. You tried ${
@@ -26,15 +33,6 @@ function myMacro({ references, state, babel }) {
       babel.types.stringLiteral('react-native-reanimated'),
     ),
   )
-}
-
-function asTag(quasiPath, state, babel, libraryIdentifier) {
-  // TODO: not implemented!
-  return genericReplace(quasiPath, state, babel, libraryIdentifier)
-}
-
-function asFunction([argumentPath], state, babel, libraryIdentifier) {
-  return genericReplace(argumentPath, state, babel, libraryIdentifier)
 }
 
 function genericReplace(argumentPath, state, babel, libraryIdentifier) {

@@ -46,5 +46,15 @@ pluginTester({
         const z = reanimate(10 * -a + 2)
       `,
     },
+    {
+      title: 'basic template string without variables',
+      code: `
+        import re from './macro'
+
+        const x = re\`1 + 2\`
+        const y = re\`-2 + sin(12)\`
+        const z = re\`1 * 22 / cos(sqrt(2))\`
+      `,
+    },
   ],
 })

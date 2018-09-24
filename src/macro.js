@@ -1,9 +1,12 @@
 import { createMacro } from 'babel-plugin-macros'
+import { addDefault } from '@babel/helper-module-imports'
 
 export default createMacro(reanimatedMacro)
 
 function reanimatedMacro({ references, state, babel }) {
-  const libraryIdentifier = state.file.path.scope.generateUidIdentifier('reanimated')
+  const { name: libraryIdentifier } = addDefault(state.file.path, 'react-native-reanimated', {
+    nameHint: 'reanimated',
+  })
 
   references.default.forEach(referencePath => {
     if (referencePath.parentPath.type === 'TaggedTemplateExpression') {
@@ -48,14 +51,6 @@ function reanimatedMacro({ references, state, babel }) {
       )
     }
   })
-
-  // add reanimated import
-  state.file.path.node.body.unshift(
-    babel.types.importDeclaration(
-      [babel.types.importDefaultSpecifier(libraryIdentifier)],
-      babel.types.stringLiteral('react-native-reanimated'),
-    ),
-  )
 }
 
 function genericReplace(argumentPath, state, babel, libraryIdentifier) {

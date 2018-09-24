@@ -5,3 +5,6 @@
 .history
 src
 .babelrc
+.eslintrc.yml
+.prettierrc.yml
+yarn.lock

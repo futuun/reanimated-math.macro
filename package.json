@@ -1,6 +1,6 @@
 {
   "name": "reanimated-math.macro",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Macro for arithmetic over Animated.Values from reanimated",
   "main": "lib/macro.js",
   "scripts": {
